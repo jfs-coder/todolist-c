@@ -61,6 +61,17 @@ int main(int argc, char **argv) {
 	 * Don't forget to close the file once done.
 	 */
 
+	if ( (argc == 3) && (!strcmp("-add", argv[1])) ) {
+		// Open file "list" and append/write to it the entry provided
+		FILE *todoFile;
+		todoFile = fopen("list", "a");
+		printf("Adding Entry: -> %s\n", argv[2]);
+		fputs(argv[2], todoFile);
+		// here we have to add a NEWLINE manually because fputs doesn't do it automatically on our string.
+		fputs("\n", todoFile);
+		fclose(todoFile);
+	}
+
 	/* -RM
 	 * Check to see if there are 3 args and the 2nd one matches '-rm' (the 2nd arg will be element to remove from list)
 	 * First we need to read the file and store all the lines in an array
@@ -69,6 +80,21 @@ int main(int argc, char **argv) {
 	 * by making a comparison with the current index. if index == choice, then skip writing, effectively
 	 * removing it from list and by extension the file. Remember to close the files.
 	 */
+	
+	if ( (argc == 3) && (!strcmp("-rm", argv[1])) ) {
+		// read in the lines from the file and put in string array char**?
+		// create for loop that goes item by item but skips the number in argv[2] (i.e. todo -rm 3 would be 3)
+		FILE *todoFile;
+		if( (todoFile = fopen("list", "r"))) {
+			char line[50][256];
+			int counter = 0;
+			while (fgets(line[counter], sizeof(line[counter]), todoFile)) {
+				printf("[%d]: %s\n", counter + 1, line[counter]);
+				counter++;
+			}
+		}
+	}
+
 
 	return 0;
 }
