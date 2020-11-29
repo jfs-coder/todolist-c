@@ -1,5 +1,6 @@
 // let's create a simple todo list app in c (porting from Python)
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 int main(int argc, char **argv) {
@@ -87,11 +88,22 @@ int main(int argc, char **argv) {
 		FILE *todoFile;
 		if( (todoFile = fopen("list", "r"))) {
 			char line[50][256];
-			int counter = 0;
+			int counter = 0; // used to know when to skip reading
+			int lineCounter = 0;
 			while (fgets(line[counter], sizeof(line[counter]), todoFile)) {
-				printf("[%d]: %s\n", counter + 1, line[counter]);
 				counter++;
+				lineCounter++;
 			}
+			fclose(todoFile);
+
+			todoFile = fopen("list", "w");
+			int i;
+			for (i = 0; i < lineCounter; i++) {
+				if(i+1 == atoi(argv[2]))
+					continue;
+				fputs(line[i], todoFile);				
+			}
+			fclose(todoFile);
 		}
 	}
 
