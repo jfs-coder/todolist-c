@@ -4,9 +4,12 @@
 #include <string.h>
 
 int main(int argc, char **argv) {
+
+	const char* VERSION = "0.1b";
 	// check to see if there are args...
 	// if args is 1 then show "For Help: todo -help"
 	if (argc == 1) {
+		printf("\n[TODO LIST - Version %s]\n\n");
 		printf("\nFor Help: todo -help\n\n");
 	}
 
@@ -20,7 +23,8 @@ int main(int argc, char **argv) {
 	 */
 
 	if ( (argc == 2) && (!strcmp("-help", argv[1])) ) {
-		printf("\nUsage:\n");
+		printf("\n[TODO LIST - Version %s]\n\n", VERSION);
+		printf("Usage:\n");
 		printf("todo -list (lists all elements)\n");
 		printf("todo -add 'something to do'\n");
 		printf("todo -rm 3 (removes 3rd element from the list)\n\n");
@@ -40,7 +44,7 @@ int main(int argc, char **argv) {
 		// check to see if the 'list' file exists and if so read and display entries, else print msg
 		FILE *todoFile;
 		if( (todoFile = fopen("list", "r"))) {
-			printf("[TODO LIST]\n\n");
+			printf("\n[TODO LIST - Version %s]\n\n", VERSION);
 			char line[256];
 			int counter = 1;
 			while (fgets(line, sizeof(line), todoFile)) {
@@ -66,7 +70,7 @@ int main(int argc, char **argv) {
 		// Open file "list" and append/write to it the entry provided
 		FILE *todoFile;
 		todoFile = fopen("list", "a");
-		printf("Adding Entry: -> %s\n", argv[2]);
+		printf("\nAdding Entry: -> %s\n\n", argv[2]);
 		fputs(argv[2], todoFile);
 		// here we have to add a NEWLINE manually because fputs doesn't do it automatically on our string.
 		fputs("\n", todoFile);
@@ -99,8 +103,10 @@ int main(int argc, char **argv) {
 			todoFile = fopen("list", "w");
 			int i;
 			for (i = 0; i < lineCounter; i++) {
-				if(i+1 == atoi(argv[2]))
+				if(i+1 == atoi(argv[2])) {
+					printf("\nRemoving Entry #%d -> %s\n", i+1, line[i]);
 					continue;
+				}
 				fputs(line[i], todoFile);				
 			}
 			fclose(todoFile);
