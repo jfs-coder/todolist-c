@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-const char* VERSION = "0.3";
+const char* VERSION = "0.4";
 const char* LIST_PATH = "list";
 
 int noSwitchIsPresent(int argumentCount) {
@@ -30,6 +30,11 @@ int addSwitchIsPresent(int argumentCount, char* argumentString) {
 int rmSwitchIsPresent(int argumentCount, char* argumentString) {
 	// if there are three arguments and the second argument is equal to "rm" then return 1 (true)
 	return (argumentCount == 3) && (!strcmp("rm", argumentString));
+}
+
+int swapSwitchIsPresent(int argumentCount, char* argumentString) {
+	// if there are four arguments and the third argument is equal to "swap" then return 1 (true)
+	return (argumentCount == 4) && (!strcmp("swap", argumentString));
 }
 
 void displayHelp() {
@@ -70,8 +75,8 @@ void addElement(char* argumentString) {
 	fclose(todoFile);
 }
 
-void rmElement(char* argumentString) {
-	int elementToRemove = atoi(argumentString); // convert arg string (choice of element to remove) to integer
+void rmElement(char* argumentNumber) {
+	int elementToRemove = atoi(argumentNumber); // convert arg string (choice of element to remove) to integer
 	FILE *todoFile;
 	if ((todoFile = fopen(LIST_PATH, "r"))) {
 		char line[50][256];
@@ -97,7 +102,35 @@ void rmElement(char* argumentString) {
 	}
 }
 
+void swapElement(char* argumentNumber, char* argumentString) {
+	int elementToSwap = atoi(argumentNumber);
+	FILE *todoFile;
+	if ((todoFile = fopen(LIST_PATH, "r"))) {
+		char line[50][256];
+		int counter = 0; // used to iterate lines
+		int lineCounter = 0; // used to find out how many lines we are dealing with
+		while (fgets(line[counter], sizeof(line[counter]), todoFile)) {
+			counter++;
+			lineCounter++;
+		}
+		fclose(todoFile);
 
+		// write to the file, but swapping the one entry being replaced.
+		todoFile = fopen(LIST_PATH, "w");
+		int i;
+		for (i = 0; i < lineCounter; i++) {
+			if(i+1 == elementToSwap) {
+				printf("\nSwaping Entry #%d -> %s", i+1, line[i]);
+			        printf("With Entry -> %s\n", argumentString);
+				fputs(argumentString, todoFile); // here we write the replacement string and then continue to skip the real line
+				fputs("\n", todoFile); // here we add a newline because fputs doesn't do it on its own. important for file format.
+				continue; // skip adding it to the file, effectively swaping entry.
+			}
+			fputs(line[i], todoFile);
+		}
+		fclose(todoFile);
+	}
+}
 
 int main(int argc, char **argv) {
 
@@ -120,6 +153,11 @@ int main(int argc, char **argv) {
 
 	if (rmSwitchIsPresent(argc, argv[1])) {
 		rmElement(argv[2]);
+		displayList();
+	}
+
+	if (swapSwitchIsPresent(argc, argv[1])) {
+		swapElement(argv[2], argv[3]);
 		displayList();
 	}
 
