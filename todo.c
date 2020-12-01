@@ -13,32 +13,32 @@ int noSwitchIsPresent(int argumentCount) {
 }
 
 int helpSwitchIsPresent(int argumentCount, char* argumentString) {
-	// if there are two arguments and the second argument is equal to "-help" then return 1 (true)
-	return (argumentCount == 2) && (!strcmp("-help", argumentString));
+	// if there are two arguments and the second argument is equal to "help" then return 1 (true)
+	return (argumentCount == 2) && (!strcmp("help", argumentString));
 }
 
 int listSwitchIsPresent(int argumentCount, char* argumentString) {
-	// if there are three arguments and the second argument is equal to "-list" then return 1 (true)
-	return (argumentCount == 2) && (!strcmp("-list", argumentString));
+	// if there are three arguments and the second argument is equal to "list" then return 1 (true)
+	return (argumentCount == 2) && (!strcmp("list", argumentString));
 }
 
 int addSwitchIsPresent(int argumentCount, char* argumentString) {
-	// if there are three arguments and the second argument is equal to "-add" then return 1 (true)
-	return (argumentCount == 3) && (!strcmp("-add", argumentString));
+	// if there are three arguments and the second argument is equal to "add" then return 1 (true)
+	return (argumentCount == 3) && (!strcmp("add", argumentString));
 }
 
 int rmSwitchIsPresent(int argumentCount, char* argumentString) {
-	// if there are three arguments and the second argument is equal to "-rm" then return 1 (true)
-	return (argumentCount == 3) && (!strcmp("-rm", argumentString));
+	// if there are three arguments and the second argument is equal to "rm" then return 1 (true)
+	return (argumentCount == 3) && (!strcmp("rm", argumentString));
 }
 
 void displayHelp() {
 	printf("\n[TODO LIST HELP - Version %s]\n\n", VERSION);
 	printf("Usage:\n");
-	printf("todo -help (displays help)\n");
-	printf("todo -list (lists all elements)\n");
-	printf("todo -add 'something to do'\n");
-	printf("todo -rm 3 (removes 3rd element from the list)\n\n");
+	printf("todo help (displays help)\n");
+	printf("todo list (lists all elements)\n");
+	printf("todo add 'something to do'\n");
+	printf("todo rm 3 (removes 3rd element from the list)\n\n");
 }
 
 void displayList() {
