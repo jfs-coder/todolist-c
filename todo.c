@@ -28,7 +28,7 @@ int addSwitchIsPresent(int argumentCount, char* argumentString) {
 }
 
 int rmSwitchIsPresent(int argumentCount, char* argumentString) {
-	// if there are three arguments and the second argument is equal to "-del" then return 1 (true)
+	// if there are three arguments and the second argument is equal to "-rm" then return 1 (true)
 	return (argumentCount == 3) && (!strcmp("-rm", argumentString));
 }
 
