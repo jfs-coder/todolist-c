@@ -4,8 +4,8 @@
 #include <string.h>
 
 const char* VERSION = "0.4a";
-const char* LIST_PATH = "/home/ec2-user/bin/.list";
-// const char* LIST_PATH = "list";
+// const char* LIST_PATH = "/home/ec2-user/bin/.list";
+const char* LIST_PATH = "list";
 
 int noSwitchIsPresent(int argumentCount) {
 	// checks to see if there are arguments
