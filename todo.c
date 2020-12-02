@@ -3,8 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-const char* VERSION = "0.4";
-const char* LIST_PATH = "list";
+const char* VERSION = "0.4a";
+const char* LIST_PATH = "/home/ec2-user/bin/.list";
+// const char* LIST_PATH = "list";
 
 int noSwitchIsPresent(int argumentCount) {
 	// checks to see if there are arguments
@@ -43,7 +44,8 @@ void displayHelp() {
 	printf("todo help (displays help)\n");
 	printf("todo list (lists all elements)\n");
 	printf("todo add 'something to do'\n");
-	printf("todo rm 3 (removes 3rd element from the list)\n\n");
+	printf("todo rm 3 (removes 3rd element from the list)\n");
+	printf("todo swap 3 'new replacement text' (swaps an entry for a new string text)\n\n");
 }
 
 void displayList() {
