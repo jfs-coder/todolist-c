@@ -62,7 +62,7 @@ void displayList() {
 		fclose(todoFile);
 	}
 	else {
-		printf("\nNo elements found. Add some things to do using <todo -add 'something to do'>\n\n"); 
+		printf("\nNo elements found. Add some things to do using <todo add 'something to do'>\n\n"); 
 	}
 }
 
