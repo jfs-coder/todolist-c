@@ -3,39 +3,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-const char* VERSION = "0.4a";
+const char* VERSION = "0.5";
 // const char* LIST_PATH = "/home/ec2-user/bin/.list";
 const char* LIST_PATH = "list";
 
-int noSwitchIsPresent(int argumentCount) {
-	// checks to see if there are arguments
-	// 1 arg doesn't count because it is the app name.
-	return  (argumentCount == 1);
-}
-
-int helpSwitchIsPresent(int argumentCount, char* argumentString) {
-	// if there are two arguments and the second argument is equal to "help" then return 1 (true)
-	return (argumentCount == 2) && (!strcmp("help", argumentString));
-}
-
-int listSwitchIsPresent(int argumentCount, char* argumentString) {
-	// if there are three arguments and the second argument is equal to "list" then return 1 (true)
-	return (argumentCount == 2) && (!strcmp("list", argumentString));
-}
-
-int addSwitchIsPresent(int argumentCount, char* argumentString) {
-	// if there are three arguments and the second argument is equal to "add" then return 1 (true)
-	return (argumentCount == 3) && (!strcmp("add", argumentString));
-}
-
-int rmSwitchIsPresent(int argumentCount, char* argumentString) {
-	// if there are three arguments and the second argument is equal to "rm" then return 1 (true)
-	return (argumentCount == 3) && (!strcmp("rm", argumentString));
-}
-
-int swapSwitchIsPresent(int argumentCount, char* argumentString) {
-	// if there are four arguments and the third argument is equal to "swap" then return 1 (true)
-	return (argumentCount == 4) && (!strcmp("swap", argumentString));
+int checkWhichSwitchIsPresent(int argumentCount, int argumentNumber, char* argumentString, char* argSwitch) {
+	return  (argumentCount == argumentNumber && (!strcmp(argumentString, argSwitch)));
 }
 
 void displayHelp() {
@@ -135,32 +108,36 @@ void swapElement(char* argumentNumber, char* argumentString) {
 }
 
 int main(int argc, char **argv) {
-
-	if (noSwitchIsPresent(argc)) {
+	// if there are less than 2 arguments, then that means no switches present.
+	if (argc == 1) {
 		displayHelp();
 	}
 
-	if (helpSwitchIsPresent(argc, argv[1])) {
+	if (checkWhichSwitchIsPresent(argc, 2, argv[1], "help")) {
 		displayHelp();
 	}
 
-	if (listSwitchIsPresent(argc, argv[1])) {
+	if (checkWhichSwitchIsPresent(argc, 2, argv[1], "list")) {
 		displayList();
 	}
 
-	if (addSwitchIsPresent(argc, argv[1])) {
+	if (checkWhichSwitchIsPresent(argc, 3, argv[1], "add")) {
 		addElement(argv[2]);
 		displayList();
 	}
 
-	if (rmSwitchIsPresent(argc, argv[1])) {
+	if (checkWhichSwitchIsPresent(argc, 3, argv[1], "rm")) {
 		rmElement(argv[2]);
 		displayList();
 	}
 
-	if (swapSwitchIsPresent(argc, argv[1])) {
+	if (checkWhichSwitchIsPresent(argc, 4, argv[1], "swap")) {
 		swapElement(argv[2], argv[3]);
 		displayList();
+	}
+
+	if (checkWhichSwitchIsPresent(argc, 2, argv[1], "secret")) {
+		printf("\nDo you know the way?\n\n");
 	}
 
 	return 0;
